@@ -104,28 +104,23 @@
         return nullptr;
     }
     int main() {
-        std::cout << "[*] 正在通过 PEB 遍历获取 kernel32.dll 基址..." << std::endl;
         // 用哈希值从 PEB 链表里找到 kernel32.dll 的基址
         DWORD kernel32Hash = 2414663231;
         HMODULE hKernel32 = (HMODULE)GetModuleAddress(kernel32Hash);
         if (!hKernel32) {
-            std::cerr << "[-] 未找到 kernel32.dll" << std::endl;
             system("pause");
             return 1;
         }
-        std::cout << "[+] kernel32.dll 基址: 0x" << std::hex
-                  << (uintptr_t)hKernel32 << std::dec << std::endl;
+        std::cout << std::hex << (uintptr_t)hKernel32 << std::dec << std::endl;
 
         // 用哈希值从导出表里找到 CreateRemoteThread 的地址
         DWORD hashCRT = 1929223661;
         void* addrCRT = GetProcAddressR(hKernel32, hashCRT);
         if (!addrCRT) {
-            std::cerr << "[-] 未找到 CreateRemoteThread" << std::endl;
             system("pause");
             return 1;
         }
-        std::cout << "[+] GetProcAddressR 找到 CreateRemoteThread: 0x"
-                  << std::hex << (uintptr_t)addrCRT << std::dec << std::endl;
+        std::cout << std::hex << (uintptr_t)addrCRT << std::dec << std::endl;
 
         std::cin.get();
     }
