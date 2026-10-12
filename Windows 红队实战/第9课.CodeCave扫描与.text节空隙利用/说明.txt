@@ -1,5 +1,0 @@
-CodeCave注入现已因为系统自带 CFG 而普遍无法成功，因此这里就不进行过多赘述。
-
-解决方法：
-用 SetProcessValidCallTargets 把 Code Cave 地址注册为合法入口（需要进程有 CFG 权限）。
-用 NtCreateThreadEx 替代 CreateRemoteThread（某些情况下 CFG 检查路径不同）。
